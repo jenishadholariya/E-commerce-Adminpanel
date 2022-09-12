@@ -59,7 +59,7 @@ function Vegetable(props) {
 
     const innerdata = (values) => {
 
-        let LocalData = JSON.parse(localStorage.getItem("Fruit"));
+        let LocalData = JSON.parse(localStorage.getItem("Vegetable"));
 
         let id = Math.floor(Math.random() * 1000);
 
@@ -72,10 +72,10 @@ function Vegetable(props) {
         console.log(data);
 
         if (LocalData === null) {
-            localStorage.setItem("Fruit", JSON.stringify([data]));
+            localStorage.setItem("Vegetable", JSON.stringify([data]));
         } else {
             LocalData.push(data);
-            localStorage.setItem("Fruit", JSON.stringify(LocalData));
+            localStorage.setItem("Vegetable", JSON.stringify(LocalData));
         }
 
 
@@ -86,7 +86,7 @@ function Vegetable(props) {
     }
 
     const handleUpadatedata = (values) => {
-        let LocalData = JSON.parse(localStorage.getItem("Fruit"));
+        let LocalData = JSON.parse(localStorage.getItem("Vegetable"));
 
         let uData = LocalData.map((d) => {
             if (d.id === values.id) {
@@ -95,7 +95,7 @@ function Vegetable(props) {
                 return d;
             }
         })
-        localStorage.getItem("Fruit", JSON.stringify(uData));
+        localStorage.getItem("Vegetable", JSON.stringify(uData));
 
     }
 
@@ -120,9 +120,9 @@ function Vegetable(props) {
 
     const handleDelete = () => {
         console.log(data);
-        let LocalData = JSON.parse(localStorage.getItem("Fruit"));
+        let LocalData = JSON.parse(localStorage.getItem("Vegetable"));
         let fData = LocalData.filter((l) => l.id !== did);
-        localStorage.setItem("Fruit", JSON.stringify(fData))
+        localStorage.setItem("Vegetable", JSON.stringify(fData))
         LoadData();
         handleClose();
     }
@@ -158,7 +158,7 @@ function Vegetable(props) {
     }, []);
 
     const LoadData = () => {
-        let LocalData = JSON.parse(localStorage.getItem("Fruit"))
+        let LocalData = JSON.parse(localStorage.getItem("Vegetable"))
 
         if (LocalData !== null) {
             setData(LocalData)
@@ -167,7 +167,7 @@ function Vegetable(props) {
 
     const handleSearch = (val) => {
 
-        let localData = JSON.parse(localStorage.getItem("Fruit"));
+        let localData = JSON.parse(localStorage.getItem("Vegetable"));
 
         let fData = localData.filter((d) => (
             d.name.toLowerCase().includes(val.toLowerCase()) ||

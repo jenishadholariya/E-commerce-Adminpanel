@@ -13,6 +13,8 @@ import { useEffect } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
+import { Delete_Fruit, Get_Fruit } from '../../Redux/Action/Fruit.action';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Fruit(props) {
 
@@ -119,10 +121,12 @@ function Fruit(props) {
     });
 
     const handleDelete = () => {
-        console.log(data);
-        let LocalData = JSON.parse(localStorage.getItem("Fruit"));
-        let fData = LocalData.filter((l) => l.id !== did);
-        localStorage.setItem("Fruit", JSON.stringify(fData))
+        // console.log(data);
+        // let LocalData = JSON.parse(localStorage.getItem("Fruit"));
+        // let fData = LocalData.filter((l) => l.id !== did);
+        // localStorage.setItem("Fruit", JSON.stringify(fData))
+
+        dispatch(Delete_Fruit(did))
         LoadData();
         handleClose();
     }
@@ -153,9 +157,14 @@ function Fruit(props) {
 
     useEffect(() => {
 
-        LoadData();
+        // LoadData();
+        dispatch(Get_Fruit())
 
     }, []);
+
+    const dispatch=useDispatch();
+
+    const fr=useSelector(state => state.fruit)
 
     const LoadData = () => {
         let LocalData = JSON.parse(localStorage.getItem("Fruit"))
@@ -200,7 +209,7 @@ function Fruit(props) {
             />
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
-                    rows={finalData}
+                    rows={fr.fruit}
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}

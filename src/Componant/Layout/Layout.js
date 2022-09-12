@@ -111,6 +111,10 @@ export default function Layout({children}) {
             label: 'Vegetable',
             to: '/Vegetable',
             icon: <StoreMallDirectoryIcon />
+        },
+        {
+            label: 'Counter',
+            to: '/Counter',
         }
     ]
 
