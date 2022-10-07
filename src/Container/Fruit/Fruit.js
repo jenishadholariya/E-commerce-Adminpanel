@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import * as yup from 'yup';
 import { Formik, useFormik, Form } from 'formik';
@@ -13,7 +12,7 @@ import { useEffect } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
-import { Delete_Fruit, Get_Fruit } from '../../Redux/Action/Fruit.action';
+import { Add_Fruit, Delete_Fruit, Get_Fruit, Put_Fruit } from '../../Redux/Action/Fruit.action';
 import { useDispatch, useSelector } from 'react-redux';
 
 function Fruit(props) {
@@ -29,7 +28,6 @@ function Fruit(props) {
     const [data, setData] = useState([]);
 
     const [filterData, setFilterData] = useState([]);
-
 
     const handleDClickOpen = () => {
         setDOpen(true);
@@ -63,23 +61,24 @@ function Fruit(props) {
 
         let LocalData = JSON.parse(localStorage.getItem("Fruit"));
 
-        let id = Math.floor(Math.random() * 1000);
+        // let id = Math.floor(Math.random() * 1000);
 
-        console.log(LocalData, id);
+        // console.log(LocalData, id);
 
-        let data = {
-            id: id,
-            ...values
-        }
-        console.log(data);
+        // let data = {
+        //     id: id,
+        //     ...values
+        // }
+        // console.log(data);
 
-        if (LocalData === null) {
-            localStorage.setItem("Fruit", JSON.stringify([data]));
-        } else {
-            LocalData.push(data);
-            localStorage.setItem("Fruit", JSON.stringify(LocalData));
-        }
+        // if (LocalData === null) {
+        //     localStorage.setItem("Fruit", JSON.stringify([data]));
+        // } else {
+        //     LocalData.push(data);
+        //     localStorage.setItem("Fruit", JSON.stringify(LocalData));
+        // }
 
+        dispatch(Add_Fruit(data))
 
         LoadData();
         formikobj.resetForm();
@@ -88,16 +87,22 @@ function Fruit(props) {
     }
 
     const handleUpadatedata = (values) => {
-        let LocalData = JSON.parse(localStorage.getItem("Fruit"));
+        // let LocalData = JSON.parse(localStorage.getItem("Fruit"));
 
-        let uData = LocalData.map((d) => {
-            if (d.id === values.id) {
-                return values;
-            } else {
-                return d;
-            }
-        })
-        localStorage.getItem("Fruit", JSON.stringify(uData));
+        // let uData = LocalData.map((d) => {
+        //     if (d.id === values.id) {
+        //         return values;
+        //     } else {
+        //         return d;
+        //     }
+        // })
+        // localStorage.getItem("Fruit", JSON.stringify(uData));
+
+        dispatch(Put_Fruit(values))
+
+        LoadData();
+        formikobj.resetForm();
+        handleClose();
 
     }
 
@@ -109,7 +114,7 @@ function Fruit(props) {
         },
         validationSchema: schema,
         onSubmit: values => {
-            console.log(values);
+            // console.log(values);
             {
                 if (update) {
                     handleUpadatedata(values);
@@ -162,9 +167,9 @@ function Fruit(props) {
 
     }, []);
 
-    const dispatch=useDispatch();
+    const dispatch = useDispatch();
 
-    const fr=useSelector(state => state.fruit)
+    const fr = useSelector(state => state.fruit)
 
     const LoadData = () => {
         let LocalData = JSON.parse(localStorage.getItem("Fruit"))
@@ -194,103 +199,114 @@ function Fruit(props) {
 
     return (
         <div>
-            <h1>Fruits Details</h1>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Fruits Details
-            </Button>
-            <TextField
-                margin="dense"
-                name="search"
-                label="Fruits search"
-                type="search"
-                fullWidth
-                variant="standard"
-                onChange={(e) => handleSearch(e.target.value)}
-            />
-            <div style={{ height: 400, width: '100%' }}>
-                <DataGrid
-                    rows={fr.fruit}
-                    columns={columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[5]}
-                    checkboxSelection
-                />
-            </div>
-            <Dialog
-                open={dopen}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                    {"Are you sure delete?"}
-                </DialogTitle>
-                <DialogActions>
-                    <Button onClick={handleClose}>No</Button>
-                    <Button onClick={handleDelete} autoFocus>
-                        Yes
-                    </Button>
-                </DialogActions>
-            </Dialog>
-            <Dialog open={open} onClose={handleClose} fullWidth>
-                <DialogTitle>Fruits Details</DialogTitle>
-
-                <Formik values={formikobj}>
-                    <Form onSubmit={handleSubmit}>
-                        <DialogContent>
-                            <TextField
-                                value={values.name}
-                                margin="dense"
-                                name="name"
-                                label="Fruits Name"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                            {errors.name && touched.name ? <p>errors.name</p> : ''}
+            {
+                fr.isloading ?
+                    <p>Loading.......</p>
+                    :
+                    fr.error !== '' ?
+                        <p>{fr.error}</p>
+                        :
+                        <div>
+                            <h1>Fruits Details</h1>
+                            <Button variant="outlined" onClick={handleClickOpen}>
+                                Fruits Details
+                            </Button>
                             <TextField
                                 margin="dense"
-                                value={values.price}
-                                name="price"
-                                label="Fruits price"
-                                type="text"
+                                name="search"
+                                label="Fruits search"
+                                type="search"
                                 fullWidth
                                 variant="standard"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
+                                onChange={(e) => handleSearch(e.target.value)}
                             />
-                            {errors.price && touched.price ? <p>errors.price</p> : ''}
-                            <TextField
-                                value={values.equtity}
-                                margin="dense"
-                                name="equtity"
-                                label="Fruit equtity"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                            {errors.equtity && touched.equtity ? <p>errors.equtity</p> : ''}
+                            <div style={{ height: 400, width: '100%' }}>
+                                <DataGrid
+                                    rows={fr.fruit}
+                                    columns={columns}
+                                    pageSize={5}
+                                    rowsPerPageOptions={[5]}
+                                    checkboxSelection
+                                />
+                            </div>
+                            <Dialog
+                                open={dopen}
+                                onClose={handleClose}
+                                aria-labelledby="alert-dialog-title"
+                                aria-describedby="alert-dialog-description"
+                            >
+                                <DialogTitle id="alert-dialog-title">
+                                    {"Are you sure delete?"}
+                                </DialogTitle>
+                                <DialogActions>
+                                    <Button onClick={handleClose}>No</Button>
+                                    <Button onClick={handleDelete} autoFocus>
+                                        Yes
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
+                            <Dialog open={open} onClose={handleClose} fullWidth>
+                                <DialogTitle>Fruits Details</DialogTitle>
 
-                            <DialogActions>
-                                <Button onClick={handleClose}>Cancel</Button>
-                                {
-                                    update ?
-                                        <Button type="submit">update</Button>
-                                        :
-                                        <Button type="submit">Submit</Button>
-                                }
+                                <Formik values={formikobj}>
+                                    <Form onSubmit={handleSubmit}>
+                                        <DialogContent>
+                                            <TextField
+                                                value={values.name}
+                                                margin="dense"
+                                                name="name"
+                                                label="Fruits Name"
+                                                type="text"
+                                                fullWidth
+                                                variant="standard"
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                            />
+                                            {errors.name && touched.name ? <p>errors.name</p> : ''}
+                                            <TextField
+                                                margin="dense"
+                                                value={values.price}
+                                                name="price"
+                                                label="Fruits price"
+                                                type="text"
+                                                fullWidth
+                                                variant="standard"
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                            />
+                                            {errors.price && touched.price ? <p>errors.price</p> : ''}
+                                            <TextField
+                                                value={values.equtity}
+                                                margin="dense"
+                                                name="equtity"
+                                                label="Fruit equtity"
+                                                type="text"
+                                                fullWidth
+                                                variant="standard"
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                            />
+                                            {errors.equtity && touched.equtity ? <p>errors.equtity</p> : ''}
 
-                            </DialogActions>
-                        </DialogContent>
+                                            <DialogActions>
+                                                <Button onClick={handleClose}>Cancel</Button>
+                                                {
+                                                    update ?
+                                                        <Button type="submit">update</Button>
+                                                        :
+                                                        <Button type="submit">Submit</Button>
+                                                }
 
-                    </Form>
-                </Formik>
+                                            </DialogActions>
+                                        </DialogContent>
 
-            </Dialog>
+                                    </Form>
+                                </Formik>
+
+                            </Dialog>
+                        </div>
+            }
+
         </div>
     );
 }

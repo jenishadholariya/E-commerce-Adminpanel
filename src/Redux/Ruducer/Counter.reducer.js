@@ -6,7 +6,7 @@ const initval = {
 
 export const CounterReducer = (state = initval, action) => {
 
-    console.log(action.type,action.payload);
+    // console.log(action.type,action.payload);
     
     switch (action.type) {
         case ActionType.INCREMENT_COUNTER:

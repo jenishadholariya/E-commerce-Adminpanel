@@ -23,6 +23,26 @@ export const FruitReducer = (state = initval, action) => {
                 fruit: state.fruit.filter((m) => m.id !== action.payload),
                 error: ''
             }
+        case ActionType.ADD_DATA:
+            return {
+                ...state,
+                isloding: false,
+                fruit: state.fruit.concat(action.payload),
+                error: ''
+            }
+        case ActionType.PUT_DATA:
+            return {
+                ...state,
+                isloding: false,
+                fruit: state.fruit.map((m)=>{
+                    if(m.id === action.payload.id){
+                        return action.payload
+                    }else{
+                        return m
+                    }
+                }),
+                error: ''
+            }
         default:
             return state
     }

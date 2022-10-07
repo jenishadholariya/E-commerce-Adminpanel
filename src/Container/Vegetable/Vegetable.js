@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import * as yup from 'yup';
 import { Formik, useFormik, Form } from 'formik';
@@ -13,6 +12,8 @@ import { useEffect , useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
+import { useDispatch, useSelector } from 'react-redux';
+import { Vegetable_delete, Vegetable_get } from '../../Redux/Action/Vegetable.Action';
 
 function Vegetable(props) {
 
@@ -107,7 +108,7 @@ function Vegetable(props) {
         },
         validationSchema: schema,
         onSubmit: values => {
-            console.log(values);
+            // console.log(values);
             {
                 if (update) {
                     handleUpadatedata(values);
@@ -119,10 +120,12 @@ function Vegetable(props) {
     });
 
     const handleDelete = () => {
-        console.log(data);
-        let LocalData = JSON.parse(localStorage.getItem("Vegetable"));
-        let fData = LocalData.filter((l) => l.id !== did);
-        localStorage.setItem("Vegetable", JSON.stringify(fData))
+        // console.log(data);
+        // let LocalData = JSON.parse(localStorage.getItem("Vegetable"));
+        // let fData = LocalData.filter((l) => l.id !== did);
+        // localStorage.setItem("Vegetable", JSON.stringify(fData))
+
+        dispatch(Vegetable_delete(did))
         LoadData();
         handleClose();
     }
@@ -153,9 +156,14 @@ function Vegetable(props) {
 
     useEffect(() => {
 
-        LoadData();
+        // LoadData();
+        dispatch(Vegetable_get())
 
     }, []);
+
+    const dispatch = useDispatch();
+
+    const ve = useSelector(state => state.vegetable)
 
     const LoadData = () => {
         let LocalData = JSON.parse(localStorage.getItem("Vegetable"))
@@ -203,7 +211,7 @@ function Vegetable(props) {
             />
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
-                    rows={finalData}
+                    rows={ve.vegetable}
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}

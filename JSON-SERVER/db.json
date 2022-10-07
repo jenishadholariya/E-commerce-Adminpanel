@@ -4,65 +4,69 @@
       "id": 1,
       "name": "Mango",
       "price": 520,
-      "equtity":250
+      "equtity": 250
     },
     {
       "id": 2,
       "name": "Banana",
       "price": 520,
-      "equtity":250
-    },
-    {
-      "id": 3,
-      "name": "Apple",
-      "price": 520,
-      "equtity":250
-    },
-    {
-      "id": 4,
-      "name": "Graps",
-      "price": 520,
-      "equtity":250
-    },
-    {
-      "id": 5,
-      "name": "Orange",
-      "price": 520,
-      "equtity":250
-    },
-    {
-      "id": 6,
-      "name": "Pineapple",
-      "price": 520,
-      "equtity":250
+      "equtity": 250
     },
     {
       "id": 7,
       "name": "Papaya",
       "price": 520,
-      "equtity":250
+      "equtity": 250
     },
     {
       "id": 8,
       "name": "Blackberry",
       "price": 520,
-      "equtity":250
+      "equtity": 250
     },
     {
-      "id": 9,
-      "name": "Blueberry",
-      "price": 520,
-      "equtity":250
+      "id": 108,
+      "name": "Apple",
+      "price": "2000",
+      "equtity": "100"
     }
   ],
-  "comments": [
+  "Vegetable": [
     {
       "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "name": "Potato",
+      "price": 520,
+      "equtity": 250
+    },
+    {
+      "id": 2,
+      "name": "Tomato",
+      "price": 520,
+      "equtity": 250
+    },
+    {
+      "id": 5,
+      "name": "Carrot",
+      "price": 520,
+      "equtity": 250
+    },
+    {
+      "id": 6,
+      "name": "Peas",
+      "price": 520,
+      "equtity": 250
+    },
+    {
+      "id": 7,
+      "name": "Onion",
+      "price": 520,
+      "equtity": 250
+    },
+    {
+      "id": 8,
+      "name": "Cabbage",
+      "price": 520,
+      "equtity": 250
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }
