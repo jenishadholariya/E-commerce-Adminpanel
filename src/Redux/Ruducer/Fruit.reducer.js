@@ -1,6 +1,5 @@
 import * as ActionType from '../ActionType'
 
-
 const initval = {
     isloding: 'false',
     fruit: [],

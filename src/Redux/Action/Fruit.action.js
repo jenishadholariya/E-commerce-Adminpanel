@@ -60,7 +60,7 @@ export const Delete_Fruit = (id) => (dispatch) => {
     }
 }
 
-export const Add_Fruit = (data) => async(dispatch) => {
+export const Add_Fruit = (values) => async(dispatch) => {
     // try {
     //     PostAll_Fruit(data)
     //         .then((data) => dispatch({ type: ActionType.ADD_DATA, payload: data }))
@@ -96,7 +96,7 @@ export const Add_Fruit = (data) => async(dispatch) => {
             
         });
         console.log("Document written with ID: ", docRef.id);
-        dispatch({ type: ActionType.ADD_DATA, payload: { id: docRef.id, ...data}})
+        dispatch({ type: ActionType.ADD_DATA, payload: { id: docRef.id, ...values}})
     } catch (error) {
         console.error("Error adding document: ", error);
     }

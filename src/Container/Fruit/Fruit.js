@@ -78,7 +78,7 @@ function Fruit(props) {
         //     localStorage.setItem("Fruit", JSON.stringify(LocalData));
         // }
 
-        dispatch(Add_Fruit(data))
+        dispatch(Add_Fruit(values))
 
         LoadData();
         formikobj.resetForm();
